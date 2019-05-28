@@ -9,7 +9,7 @@ public class GetUser : MonoBehaviour {
     private string url = "http://localhost:8080";
 
     void Start() {
-        StartCoroutine(GetUserData());
+        //StartCoroutine(GetUserData());
     }
     
     void Update() {
