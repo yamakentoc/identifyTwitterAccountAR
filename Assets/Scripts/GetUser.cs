@@ -6,10 +6,11 @@ using UnityEngine.Networking;
 
 public class GetUser : MonoBehaviour {
 
-    private string url = "http://localhost:8080";
+    private string url = "http://192.168.10.100:8080";//"http://localhost:8080";
+    [SerializeField] GameObject circleController;
 
     void Start() {
-        //StartCoroutine(GetUserData());
+        StartCoroutine(GetUserData());
     }
     
     void Update() {
@@ -25,8 +26,9 @@ public class GetUser : MonoBehaviour {
             Debug.Log("ステータスko-do: " + request.responseCode);
             var identifiedUsers = JsonUtility.FromJson<IdentifiedUsers>(request.downloadHandler.text);
             foreach(User user in identifiedUsers.users) {
-                Debug.Log("userName: " + user.name + ", Relevance: " + user.relevance);
+                Debug.Log("userName: " + user.name + ", Relevance: " + user.relevance + ", URL: " + user.profile_image_url);
             }
+            circleController.GetComponent<Circlecontroller>().ShowIcon(identifiedUsers);
         }
     }
 }
