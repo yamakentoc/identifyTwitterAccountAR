@@ -10,7 +10,7 @@ public class Circlecontroller : MonoBehaviour {
     [SerializeField] Transform CenterPosition;                 // 対象オブジェクト
     private float ArrangementMaxRedius = 2.0f;         // 配置位置の最大半径
     private float ArrangementMinRedius = 1.0f;         // 配置位置の最小半径
-    private float ArrangementHeight = 4.0f;              // 配置位置の高さ
+    private float ArrangementHeight = 3.0f;              // 配置位置の高さ
 
     [Header("個数")]
     [SerializeField] GameObject CreaturePrefab;                 // 対象オブジェクト
@@ -41,7 +41,7 @@ public class Circlecontroller : MonoBehaviour {
 
             // 特定の範囲内か確認
             if (maxR > xAbs + zAbs && xAbs + zAbs > minR) {
-                float y = UnityEngine.Random.Range(-2, ArrangementHeight);
+                float y = UnityEngine.Random.Range(-3, ArrangementHeight);
                 GameObject userObject = Instantiate( CreaturePrefab, // 個体のオブジェクト
                                                    (new Vector3(x, y, z)) + CenterPosition.position, // 初期座標
                                                    Quaternion.identity); // 回転位置
