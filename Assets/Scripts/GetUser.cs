@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class GetUser : MonoBehaviour {
 
-    private string url = "http://localhost:8080";//"http://localhost:8080";
+    private string url = "http://192.168.10.18:8080";//"http://localhost:8080";
     [SerializeField] GameObject circleController;
 
     void Start() {
