@@ -14,7 +14,7 @@ public class Circlecontroller : MonoBehaviour {
 
     [Header("個数")]
     [SerializeField] GameObject userIconPrefab;   // 配置するオブジェクト
-    private int userLength = 1300;                 // 配置位置の最大
+    //private int userLength = 1300;                 // 配置位置の最大
 
     private double maxR;
     private double minR;
@@ -24,25 +24,25 @@ public class Circlecontroller : MonoBehaviour {
        
     }
 
-    public void ShowIcon(/*IdentifiedUsers identifiedUser*/) {
-        //identifiedUser.users.Sort((a, b) => (int)(b.relevance - a.relevance));
+    public void ShowIcon(IdentifiedUsers identifiedUsers) {
+        identifiedUsers.users.Sort((a, b) => (int)(b.relevance - a.relevance));
 
         //デバッグ
-        User user = new User { name = "hoge", id = 1, profile_image_url = "url", relevance = 100 };
-        userIconRange = new GameObject[userLength];
-        for (int i = 0; i < userIconRange.Length; i++) {
-            if (i >= 210 & i < 420) { user.relevance = 80; }
-            if (i >= 420 & i < 630) { user.relevance = 60; }
-            if (i >= 630 & i < 840) { user.relevance = 40; }
-            if (i >= 840 & i < 1050) { user.relevance = 20; }
-            if (i >= 1050) { user.relevance = 12; }
-            StartCoroutine(ShowIconCoroutine(userIconRange[i], user));
-        }
-
-        //userIconRange = new GameObject[identifiedUsers.users.Count];
-        //for (int i = 0; i < identifiedUsers.users.Count; i++) {
-        //    StartCoroutine(ShowIconCoroutine(userIconRange[i], identifiedUsers.users[i]));
+        //User user = new User { name = "hoge", id = 1, profile_image_url = "url", relevance = 100 };
+        //userIconRange = new GameObject[userLength];
+        //for (int i = 0; i < userIconRange.Length; i++) {
+        //    if (i >= 210 & i < 420) { user.relevance = 80; }
+        //    if (i >= 420 & i < 630) { user.relevance = 60; }
+        //    if (i >= 630 & i < 840) { user.relevance = 40; }
+        //    if (i >= 840 & i < 1050) { user.relevance = 20; }
+        //    if (i >= 1050) { user.relevance = 12; }
+        //    StartCoroutine(ShowIconCoroutine(userIconRange[i], user));
         //}
+
+        userIconRange = new GameObject[identifiedUsers.users.Count];
+        for (int i = 0; i < identifiedUsers.users.Count; i++) {
+            StartCoroutine(ShowIconCoroutine(userIconRange[i], identifiedUsers.users[i]));
+        }
     }
 
     private IEnumerator ShowIconCoroutine(GameObject userIcon, User user) {
@@ -64,21 +64,21 @@ public class Circlecontroller : MonoBehaviour {
 
             // 特定の範囲内か確認
             if (maxR > xAbs + zAbs && xAbs + zAbs > minR) {
-                float y = UnityEngine.Random.Range(-3, ArrangementHeight);
+                float y = UnityEngine.Random.Range(-ArrangementHeight, ArrangementHeight);
                 GameObject userObject = Instantiate(userIconPrefab, // 個体のオブジェクト
                                                    (new Vector3(x, y, z)) + CenterPosition.position, // 初期座標
                                                    Quaternion.identity); // 回転位置
                 userObject.transform.LookAt(this.CenterPosition.position);
 
-                //UnityWebRequest www = UnityWebRequestTexture.GetTexture(profileImageURL);
-                //yield return www.SendWebRequest();
-                //if (www.isNetworkError || www.isHttpError) {
-                //    Debug.Log(www.error);
-                //} else {
-                //    Texture texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                //    userObject.GetComponent<Renderer>().material.mainTexture = texture;
-                //}
-                yield return null;
+                UnityWebRequest www = UnityWebRequestTexture.GetTexture(user.profile_image_url);
+                yield return www.SendWebRequest();
+                if (www.isNetworkError || www.isHttpError) {
+                    Debug.Log(www.error);
+                } else {
+                    Texture texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                    userObject.GetComponent<Renderer>().material.mainTexture = texture;
+                }
+                //yield return null;
                 userIcon = userObject;
             }
         }

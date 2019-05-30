@@ -3,18 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 public class GetUser : MonoBehaviour {
     //PCのwifiとスマホのwifiを同じにする
     //PCのwifiのIPv4アドレスをhttp://      :8080に入れる
-    private string url = "http://192.168.10.100:8080";//"http://localhost:8080";
+    //IPAddress.Parse(Network.player.ipAddress);
+    private string url = "http://localhost:8080";
     [SerializeField] GameObject circleController;
 
     void Start() {
-        //StartCoroutine(GetUserData());
+        string ipv4 = IPManager.GetIP(ADDRESSFAM.IPv4);
+        url = "http://" + ipv4 + ":8080";
+        Debug.Log(url);
+
+        StartCoroutine(GetUserData());
         //デバッぐ
-        IdentifiedUsers identifiedUsers = new IdentifiedUsers();
-        circleController.GetComponent<Circlecontroller>().ShowIcon();
+        //IdentifiedUsers identifiedUsers = new IdentifiedUsers();
+        //circleController.GetComponent<Circlecontroller>().ShowIcon();
         //デバッグ
     }
     
@@ -33,7 +41,7 @@ public class GetUser : MonoBehaviour {
             foreach(User user in identifiedUsers.users) {
                 Debug.Log("userName: " + user.name + ", Relevance: " + user.relevance + ", URL: " + user.profile_image_url);
             }
-           // circleController.GetComponent<Circlecontroller>().ShowIcon(identifiedUsers);
+            circleController.GetComponent<Circlecontroller>().ShowIcon(identifiedUsers);
         }
     }
 }
