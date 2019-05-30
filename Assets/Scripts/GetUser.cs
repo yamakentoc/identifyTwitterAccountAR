@@ -11,7 +11,11 @@ public class GetUser : MonoBehaviour {
     [SerializeField] GameObject circleController;
 
     void Start() {
-        StartCoroutine(GetUserData());
+        //StartCoroutine(GetUserData());
+        //デバッぐ
+        IdentifiedUsers identifiedUsers = new IdentifiedUsers();
+        circleController.GetComponent<Circlecontroller>().ShowIcon();
+        //デバッグ
     }
     
     void Update() {
@@ -24,12 +28,12 @@ public class GetUser : MonoBehaviour {
         if (request.isHttpError || request.isNetworkError) {
             Debug.Log("エラー: " + request.error);
         } else {
-            Debug.Log("ステータスko-do: " + request.responseCode);
+            Debug.Log("ステータスコード: " + request.responseCode);
             var identifiedUsers = JsonUtility.FromJson<IdentifiedUsers>(request.downloadHandler.text);
             foreach(User user in identifiedUsers.users) {
                 Debug.Log("userName: " + user.name + ", Relevance: " + user.relevance + ", URL: " + user.profile_image_url);
             }
-            circleController.GetComponent<Circlecontroller>().ShowIcon(identifiedUsers);
+           // circleController.GetComponent<Circlecontroller>().ShowIcon(identifiedUsers);
         }
     }
 }

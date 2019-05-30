@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CenterPosition: {fileID: 500244729}
-  CreaturePrefab: {fileID: 5834241820369110078, guid: e20789f15606a4bbca50942d2c5a279b,
+  userIconPrefab: {fileID: 5834241820369110078, guid: e20789f15606a4bbca50942d2c5a279b,
     type: 3}
 --- !u!4 &1837814684
 Transform:
