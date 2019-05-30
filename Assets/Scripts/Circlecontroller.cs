@@ -40,7 +40,7 @@ public class Circlecontroller : MonoBehaviour {
         //}
 
         userIconRange = new GameObject[identifiedUsers.users.Count];
-        for (int i = 0; i < identifiedUsers.users.Count; i++) {
+        for (int i = 0; i < userIconRange.Length; i++) {
             StartCoroutine(ShowIconCoroutine(userIconRange[i], identifiedUsers.users[i]));
         }
     }
@@ -73,7 +73,7 @@ public class Circlecontroller : MonoBehaviour {
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(user.profile_image_url);
                 yield return www.SendWebRequest();
                 if (www.isNetworkError || www.isHttpError) {
-                    Debug.Log(www.error);
+                    Debug.Log("エラー: " + www.error);
                 } else {
                     Texture texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
                     userObject.GetComponent<Renderer>().material.mainTexture = texture;

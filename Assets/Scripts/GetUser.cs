@@ -18,8 +18,9 @@ public class GetUser : MonoBehaviour {
         string ipv4 = IPManager.GetIP(ADDRESSFAM.IPv4);
         url = "http://" + ipv4 + ":8080";
         Debug.Log(url);
-
         StartCoroutine(GetUserData());
+
+
         //デバッぐ
         //IdentifiedUsers identifiedUsers = new IdentifiedUsers();
         //circleController.GetComponent<Circlecontroller>().ShowIcon();
@@ -38,9 +39,9 @@ public class GetUser : MonoBehaviour {
         } else {
             Debug.Log("ステータスコード: " + request.responseCode);
             var identifiedUsers = JsonUtility.FromJson<IdentifiedUsers>(request.downloadHandler.text);
-            foreach(User user in identifiedUsers.users) {
-                Debug.Log("userName: " + user.name + ", Relevance: " + user.relevance + ", URL: " + user.profile_image_url);
-            }
+            //foreach(User user in identifiedUsers.users) {
+            //    Debug.Log("userName: " + user.name + ", Relevance: " + user.relevance + ", URL: " + user.profile_image_url);
+            //}
             circleController.GetComponent<Circlecontroller>().ShowIcon(identifiedUsers);
         }
     }
