@@ -15,9 +15,10 @@ public class GetUser : MonoBehaviour {
     [SerializeField] GameObject circleController;
 
     void Start() {
-        string ipv4 = IPManager.GetIP(ADDRESSFAM.IPv4);
-        url = "http://" + ipv4 + ":8080";
-        Debug.Log(url);
+        //string ipv4 = IPManager.GetIP(ADDRESSFAM.IPv4);
+        //url = "http://" + ipv4 + ":8080";
+        //Debug.Log(url);
+        url = "http://192.168.10.114:8080";
         StartCoroutine(GetUserData());
 
 

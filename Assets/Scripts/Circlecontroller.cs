@@ -74,6 +74,7 @@ public class Circlecontroller : MonoBehaviour {
                 yield return www.SendWebRequest();
                 if (www.isNetworkError || www.isHttpError) {
                     Debug.Log("エラー: " + www.error);
+                    userObject.GetComponent<Renderer>().material.color = Color.blue;
                 } else {
                     Texture texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
                     userObject.GetComponent<Renderer>().material.mainTexture = texture;
