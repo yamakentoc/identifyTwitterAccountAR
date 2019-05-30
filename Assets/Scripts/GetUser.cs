@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class GetUser : MonoBehaviour {
-
-    private string url = "http://192.168.10.18:8080";//"http://localhost:8080";
+    //PCのwifiとスマホのwifiを同じにする
+    //PCのwifiのIPv4アドレスをhttp://      :8080に入れる
+    private string url = "http://192.168.10.100:8080";//"http://localhost:8080";
     [SerializeField] GameObject circleController;
 
     void Start() {
