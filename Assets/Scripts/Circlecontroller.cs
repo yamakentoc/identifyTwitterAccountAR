@@ -45,7 +45,7 @@ public class Circlecontroller : MonoBehaviour {
         }
     }
 
-    private IEnumerator ShowIconCoroutine(GameObject userIcon, User user) {
+    private IEnumerator ShowIconCoroutine(GameObject userIconObject, User user) {
         /*
          * Relavance(関連度)が100%なら、ArrangementMinRedius(配置位置の最小半径)が1m。
          * 99%以下80%以上なら2m
@@ -56,7 +56,7 @@ public class Circlecontroller : MonoBehaviour {
         maxR = Math.Pow(ArrangementMaxRedius, 2);
         minR = Math.Pow(ArrangementMinRedius, 2);
 
-        while (userIcon == null) {
+        while (userIconObject == null) {
             float x = UnityEngine.Random.Range(-ArrangementMaxRedius, ArrangementMaxRedius);
             float z = UnityEngine.Random.Range(-ArrangementMaxRedius, ArrangementMaxRedius);
             double xAbs = Math.Abs(Math.Pow(x, 2));
@@ -65,22 +65,21 @@ public class Circlecontroller : MonoBehaviour {
             // 特定の範囲内か確認
             if (maxR > xAbs + zAbs && xAbs + zAbs > minR) {
                 float y = UnityEngine.Random.Range(-ArrangementHeight, ArrangementHeight);
-                GameObject userObject = Instantiate(userIconPrefab, // 個体のオブジェクト
+                GameObject userIcon = Instantiate(userIconPrefab, // 個体のオブジェクト
                                                    (new Vector3(x, y, z)) + CenterPosition.position, // 初期座標
                                                    Quaternion.identity); // 回転位置
-                userObject.transform.LookAt(this.CenterPosition.position);
+                userIcon.transform.LookAt(this.CenterPosition.position);
 
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(user.profile_image_url);
                 yield return www.SendWebRequest();
                 if (www.isNetworkError || www.isHttpError) {
                     Debug.Log("エラー: " + www.error);
-                    userObject.GetComponent<Renderer>().material.color = Color.blue;
                 } else {
                     Texture texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                    userObject.GetComponent<Renderer>().material.mainTexture = texture;
+                    userIcon.GetComponent<UserIcon>().SetTexture(texture);
                 }
                 //yield return null;
-                userIcon = userObject;
+                userIconObject = userIcon;
             }
         }
     }
