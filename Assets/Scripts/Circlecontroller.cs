@@ -41,11 +41,11 @@ public class Circlecontroller : MonoBehaviour {
 
         userIconRange = new GameObject[identifiedUsers.users.Count];
         for (int i = 0; i < userIconRange.Length; i++) {
-            StartCoroutine(ShowIconCoroutine(userIconRange[i], identifiedUsers.users[i]));
+            ShowIconCoroutine(userIconRange[i], identifiedUsers.users[i]);
         }
     }
 
-    private IEnumerator ShowIconCoroutine(GameObject userIconObject, User user) {
+    private void ShowIconCoroutine(GameObject userIconObject, User user) {
         /*
          * Relavance(関連度)が100%なら、ArrangementMinRedius(配置位置の最小半径)が1m。
          * 99%以下80%以上なら2m
@@ -69,16 +69,7 @@ public class Circlecontroller : MonoBehaviour {
                                                    (new Vector3(x, y, z)) + CenterPosition.position, // 初期座標
                                                    Quaternion.identity); // 回転位置
                 userIcon.transform.LookAt(this.CenterPosition.position);
-
-                UnityWebRequest www = UnityWebRequestTexture.GetTexture(user.profile_image_url);
-                yield return www.SendWebRequest();
-                if (www.isNetworkError || www.isHttpError) {
-                    Debug.Log("エラー: " + www.error);
-                } else {
-                    Texture texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                    userIcon.GetComponent<UserIcon>().SetTexture(texture);
-                }
-                //yield return null;
+                userIcon.GetComponent<UserIcon>().SetUser(user);
                 userIconObject = userIcon;
             }
         }
