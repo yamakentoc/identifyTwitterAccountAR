@@ -70,6 +70,7 @@ public class Circlecontroller : MonoBehaviour {
                                                    (new Vector3(x, y, z)) + CenterPosition.position, // 初期座標
                                                    Quaternion.identity); // 回転位置
                 userIcon.transform.LookAt(this.CenterPosition.position);
+                userIcon.transform.Rotate(new Vector3(0, 180, 0));
                 userIcon.GetComponent<UserIcon>().SetUser(user);
                 userIconObject = userIcon;
             }
