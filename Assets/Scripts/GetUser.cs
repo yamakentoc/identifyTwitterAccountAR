@@ -11,14 +11,14 @@ public class GetUser : MonoBehaviour {
     //PCのwifiとスマホのwifiを同じにする
     //PCのwifiのIPv4アドレスをhttp://      :8080に入れる
     //IPAddress.Parse(Network.player.ipAddress);
-    private string url = "http://localhost:8080";
+    private string url = "http://localhost:8080/はこだて未来";
     [SerializeField] GameObject circleController;
 
     void Start() {
         //string ipv4 = IPManager.GetIP(ADDRESSFAM.IPv4);
         //url = "http://" + ipv4 + ":8080";
         //Debug.Log(url);
-        url = "http://192.168.10.114:8080";
+        url = "http://192.168.10.114:8080/はこだて未来";
         StartCoroutine(GetUserData());
 
 
@@ -26,10 +26,6 @@ public class GetUser : MonoBehaviour {
         //IdentifiedUsers identifiedUsers = new IdentifiedUsers();
         //circleController.GetComponent<Circlecontroller>().ShowIcon();
         //デバッグ
-    }
-    
-    void Update() {
-        
     }
 
     private IEnumerator GetUserData() {
